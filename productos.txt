@@ -1,34 +1,29 @@
-productos = [
-  {
-    id: 1,
-    nombre: "camisas",
-    descripcion: "",
-    precio: 20,
-    cantidad: 18,
-    categoria: "",
-  },
-  {
-    id: 2,
-    nombre: "pantalon",
-    descripcion: "",
-    precio: 20,
-    cantidad: 12,
-    categoria: "",
-  },
-  {
-    id: 3,
-    nombre: "zapatos",
-    descripcion: "",
-    precio: 20,
-    cantidad: 8,
-    categoria: "",
-  },
-  {
-    id: 4,
-    nombre: "short",
-    descripcion: "",
-    precio: 20,
-    cantidad: 22,
-    categoria: "",
-  },
+products = [ 
+{
+id: 1,
+name: "camisa",
+description: "",
+price: 20,
+quantity: 18,
+category: "",
+},
+{
+id: 2,
+name: "pantalon",
+description: "",
+price: 20,
+quantity: 12,
+category: "",
+},
+{
+id: 3,
+name: "zapatos",
+description: "",
+price: 20,
+quantity: 8,
+category: "",
+},
 ];
+
+
+
