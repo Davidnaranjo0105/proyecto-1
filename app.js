@@ -32,7 +32,7 @@ app.post('/api/v1/products', (req, res) => {
     writeProducts(products);
     res.send(products);
   } else {
-    res.send('Unable to save product');
+    res.send('No se puede guardar el producto');
   }
 });
 
@@ -43,9 +43,9 @@ app.delete('/api/v1/products/:id', (req, res) => {
   if (index !== -1) {
     products.splice(index, 1);
     writeProducts(products);
-    res.send('Product deleted');
+    res.send('producto eliminado');
   } else {
-    res.send('Product not found');
+    res.send('Producto no encontrado');
   }
 });
 
@@ -66,10 +66,10 @@ app.patch('/api/v1/products/:id', (req, res) => {
     writeProducts(products);
     res.send(products);
   } else {
-    res.send('Error updating product');
+    res.send('Error al actualizar producto');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`)
+  console.log(`escuchando en el puerto  ${PORT}`);
 });
