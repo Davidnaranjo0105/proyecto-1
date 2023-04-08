@@ -1,0 +1,34 @@
+productos = [
+  {
+    id: 1,
+    nombre: "camisas",
+    descripcion: "",
+    precio: 20,
+    cantidad: 18,
+    categoria: "",
+  },
+  {
+    id: 2,
+    nombre: "pantalon",
+    descripcion: "",
+    precio: 20,
+    cantidad: 12,
+    categoria: "",
+  },
+  {
+    id: 3,
+    nombre: "zapatos",
+    descripcion: "",
+    precio: 20,
+    cantidad: 8,
+    categoria: "",
+  },
+  {
+    id: 4,
+    nombre: "short",
+    descripcion: "",
+    precio: 20,
+    cantidad: 22,
+    categoria: "",
+  },
+];
