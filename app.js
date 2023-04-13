@@ -10,8 +10,8 @@ const readProducts = () => {                         //devuelve los datos como u
 }; 
 
 
-const writeProducts = (products) => {
-  fs.writeFileSync('./products.txt', JSON.stringify(products)); // productos 
+const writeProducts = (products) => {       //esta función toma la información de los productos y la escribe en un archivo de texto plano en formato JSON.
+  fs.writeFileSync('./products.txt', JSON.stringify(products));  
 };
 
 app.get('/api/v1/products', (req, res) => { // solicitud get 
@@ -36,7 +36,7 @@ app.post('/api/v1/products', (req, res) => {                     // solicitud po
 });
 
 app.delete('/api/v1/products/:id', (req, res) => {   // solicitud delate para eliminar un producto con id 
-  const id = parseInt(req.params.id);   // toma el parametro del id y vuelve en un valor un entero 
+  const id = parseInt(req.params.id);   // toma el parametro del id para comprararlo  
   const products = readProducts();
   const index = products.findIndex((products) => products.id === id);   //comparando buscando dentro de los productos
   if (index !== -1) {                                          // encontrar 
@@ -45,6 +45,7 @@ app.delete('/api/v1/products/:id', (req, res) => {   // solicitud delate para el
     res.send('producto eliminado');
   } else {
     res.send('Producto no encontrado');
+    res.status().end();
   }
 });
 
@@ -62,6 +63,7 @@ app.patch('/api/v1/products/:id', (req, res) => {     //solicitud o actualizanci
         products.category = category;
       }else {
         res.send('Error al actualizar producto');
+        res.status().end();
       }
     });
     writeProducts(products);
