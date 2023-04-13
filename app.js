@@ -15,7 +15,7 @@ const writeProducts = (products) => {
 };
 
 app.get('/api/v1/products', (req, res) => { // solicitud get 
-  const products = readProducts();       //desvolver producto en json 
+  const products = readProducts();       //devolver producto en json 
   res.send(products);                    // mostrar lista de productos 
 });
 
@@ -23,15 +23,15 @@ app.post('/api/v1/products', (req, res) => {                     // solicitud po
   const {id,name,description,price,quantity,category } = req.body;  
   const products = readProducts();                                //devolver los productos a json 
   if (name && description && price && quantity && category) {    // condicional si nos ingresas name,descriptios...
-    //const id = products.length + 1;     // el id va  ser igual al ultimo que este por defecto + 1 siendo en ultimo el que se ingreso 
-    const newProduct = { ...req.body,id };  // el nuevo producto tiene que tener name descriprion
+   const id = products.length + 1;     // el id va  ser igual al ultimo que este por defecto + 1 siendo en ultimo el que se ingreso 
+    const newProduct = { ...req.body };  // el nuevo producto tiene que tener name descriprion
     products.push(newProduct);           //agreganos newproducts a la lista de products 
     writeProducts(products);
     res.status(201).end();
     res.send(products);                 // mostramos la lista de productos, ya con nuestro nuevo producto agregado 
   } else {
-       res.send('No se puede guardar el producto');
-       res.status(409).end();
+     //  res.send('No se puede guardar el producto');
+      // res.status(409).end();
   }
 });
 
