@@ -1,0 +1,1 @@
+[{"id":1,"name":"camisa","description":"h","price":1.2,"quantity":18,"category":"h"},{"id":2,"name":"zapatos","description":"h","price":8.2,"quantity":28,"category":"h"},{"id":3,"name":"medias","description":"h","price":7.2,"quantity":10,"category":"h"},]
