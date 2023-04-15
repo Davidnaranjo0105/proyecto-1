@@ -1,39 +1,73 @@
 const express = require('express');
 const fs = require('fs');
-const PORT = 4000;
+const PORT = 3002;
 const app = express();
 app.use(express.json());    
- 
-const readProducts = () => {                         //devuelve los datos como un objeto JSON
-  const products = fs.readFileSync('./products.txt'); // Se define una constante llamada products que contiene los datos 
-  return JSON.parse(products);               //leídos desde el archivo products.txt utilizando el método readFileSync del módulo fs de Node.js
-}; 
-
-
-const writeProducts = (products) => {       //esta función toma la información de los productos y la escribe en un archivo de texto plano en formato JSON.
-  fs.writeFileSync('./products.txt', JSON.stringify(products));  
+async function readProducts(products){
+  products = ('./products.txt')
+    const data =await fs.promises.readFile('./products.txt','utf-8');
+  };
+async function writeProducts (product, data) {
+    await fs.promises.writeFile('./products', data);
 };
+app.get ('./',(req,res)=>{
+  const products = readProducts(); 
+  res.send('ruta padre')
+});
 
-app.get('/api/v1/products', (req, res) => { // solicitud get 
-  const products = readProducts();       //devolver producto en json 
-  res.send(products);                    // mostrar lista de productos 
+//app.get("/api/v1/products/:product",(req,res)=>{
+//  const {productsId} = req.params;
+//  const productsIdINT = parseInt(prudusctsId);
+// const products = personas.find((products)=> personas.id === personasIdINT);
+//  console.log(req.params);
+//});
+products = ('./products.txt')
+
+app.get('/api/v1/products',async(req, res) => {
+  const products =await readProducts();
+  res.json(products);
 });
 
 app.post('/api/v1/products', (req, res) => {                     // solicitud post  agregar productos 
-  const {id,name,description,price,quantity,category } = req.body;  
+  const {name,description,price,quantity,category } = req.body;  
   const products = readProducts();                                //devolver los productos a json 
   if (name && description && price && quantity && category) {    // condicional si nos ingresas name,descriptios...
    const id = products.length + 1;     // el id va  ser igual al ultimo que este por defecto + 1 siendo en ultimo el que se ingreso 
-    const newProduct = { ...req.body };  // el nuevo producto tiene que tener name descriprion
-    products.push(newProduct);           //agreganos newproducts a la lista de products 
+    const newProduct = ({ id,...req.body});  // el nuevo producto tiene que tener name descriprion
+    products.push(newProduct);
     writeProducts(products);
-    res.status(201).end();
-    res.send(products);                 // mostramos la lista de productos, ya con nuestro nuevo producto agregado 
+    res.status(200).json(products);            
   } else {
-     //  res.send('No se puede guardar el producto');
-      // res.status(409).end();
+      res.send('No se puede guardar el producto');
+       res.status(400).end(); //solicitud incorrecta
   }
 });
+
+
+
+app.patch('/api/v1/products/:id', (req, res) => {     //solicitud o actualizancion de algun producto 
+  const { id } = req.params;
+  const { name, description, price, quantity, category } = req.body;
+  const products = readProducts();
+ {
+    products.forEach((Product, i) => {
+      if (products.id === id) {
+        products.name = name;
+        products.description = description;
+        products.price = price;                // miramos las caracteristicas los products que ya tenemos y las 
+        products.quantity = quantity;         // cambiamos si nos ingresan nuevas 
+        products.category = category;
+      }else {
+        res.send('Error al actualizar producto');
+        res.status(404).end();
+      }
+    });
+    writeProducts(products);
+    res.json(products);                   //mostramos nuestra lista de prductos actializada 
+  }
+});
+
+
 
 app.delete('/api/v1/products/:id', (req, res) => {   // solicitud delate para eliminar un producto con id 
   const id = parseInt(req.params.id);   // toma el parametro del id para comprararlo  
@@ -44,33 +78,13 @@ app.delete('/api/v1/products/:id', (req, res) => {   // solicitud delate para el
     writeProducts(products); 
     res.send('producto eliminado');
   } else {
-    res.send('Producto no encontrado');
-    res.status().end();
+    res.send('producto no encontrado')
+    res.status(404).end();
   }
-});
-
-app.patch('/api/v1/products/:id', (req, res) => {     //solicitud o actualizancion de algun producto 
-  const { id } = req.params;
-  const { name, description, price, quantity, category } = req.body;
-  const products = readProducts();
- {
-    products.forEach((product, i) => {
-      if (products.id === id) {
-        products.name = name;
-        products.description = description;
-        products.price = price;                // miramos las caracteristicas los products que ya tenemos y las 
-        products.quantity = quantity;         // cambiamos si nos ingresan nuevas 
-        products.category = category;
-      }else {
-        res.send('Error al actualizar producto');
-        res.status().end();
-      }
-    });
-    writeProducts(products);
-    res.json(products);                   //mostramos nuestra lista de prductos actializada 
-  }
-});
+}); 
 
 app.listen(PORT, () => {                            //puerto  escuchando 
   console.log(`escuchando en el puerto  ${PORT}`);   
 });
+
+
