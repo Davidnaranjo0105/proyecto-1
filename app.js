@@ -4,18 +4,17 @@ const PORT = 3002;
 const app = express();
 app.use(express.json());  
 
-function readProducts(callback){
-  fs.readFile("./products.txt", function (err, content) {
-    if (err) return callback(err)
-    callback(null, JSON.parse(content))
+function readProducts(callback){ //callback es una función que se llamará cuando se complete la lectura del archivo.
+  fs.readFile("./products.txt", function (err, content) { //devolver su contenido en formato JSON. 
+    if (err) return callback(err)   //Si se produce un error al leer el archivo, se llama a la función callback con el error como primer argumento.
+    callback(null, JSON.parse(content)) //Si no hay errores, el contenido se convierte de una cadena de texto a un objeto JSON
   })
 };
 
 // Method to read write from txt file
 function writeProducts (data) {
   try {
-    fs.writeFileSync('./products.txt', JSON.stringify(data));
-    console.log('it saved')
+    fs.writeFileSync('./products.txt', JSON.stringify(data)); //writefilesync escribe el objeto data y stringify lo convierte en json
     return true;
   } catch (err) {
     console.error(err);
